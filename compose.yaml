@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  ssh-agent:
+    build:
+      context: ssh
+      dockerfile: Dockerfile
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent/agent.sock
+      - SSH_KEY_PATH=/app/id_ed25519
+    volumes:
+      - ssh-agent:/ssh-agent
+      - ./keys/id_ed25519:/app/id_ed25519
+
+  test-client:
+    profiles:
+      - test-client
+    build:
+      context: ssh
+      dockerfile: Dockerfile
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent/agent.sock
+    volumes:
+      - ssh-agent:/ssh-agent
+    command: ssh -o StrictHostKeyChecking=no -T git@github.com
+    depends_on:
+      ssh-agent:
+        condition: service_healthy
+
+volumes:
+  ssh-agent:
