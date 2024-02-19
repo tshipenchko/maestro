@@ -1,0 +1,11 @@
+bsc:
+  host: github.com
+  user: git
+  allowed_chat_ids:
+    - 123456789
+    - 987654321
+
+  actions:
+    echo:
+      command: echo
+      description: "Echoes the given text"

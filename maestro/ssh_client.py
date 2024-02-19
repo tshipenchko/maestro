@@ -8,9 +8,9 @@ def connect_to_server(server: Server) -> SSHClient:
     client = SSHClient()
     client.set_missing_host_key_policy(AutoAddPolicy())
     client.connect(
-        hostname=server.hostname,
+        hostname=server.host,
         port=server.port,
-        username=server.username,
+        username=server.user,
     )
     AgentRequestHandler(client.get_transport().open_session())
     return client

@@ -5,7 +5,7 @@ from maestro.factory import create_bot, create_dispatcher
 
 
 def main():
-    config = Config()
+    config = Config.using_yaml()
     bot = create_bot(config)
     dispatcher = create_dispatcher(config)
 
