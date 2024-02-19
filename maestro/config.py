@@ -51,8 +51,8 @@ class Server(BaseModel):
     def model_post_init(self, __context: Any) -> None:
         for key, value in self.actions.items():
             if isinstance(value, str):
-                self.actions[key] = Action(command=value)
-            elif isinstance(value, Action) and not value.name:
+                self.actions[key] = value = Action(command=value)
+            if isinstance(value, Action) and not value.name:
                 value.name = key
 
 

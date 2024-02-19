@@ -12,20 +12,16 @@ services:
       - ssh-agent:/ssh-agent
       - ./keys/id_ed25519:/app/id_ed25519
 
-  test-client:
-    profiles:
-      - test-client
+  maestro:
     build:
-      context: ssh
+      context: .
       dockerfile: Dockerfile
     environment:
       - SSH_AUTH_SOCK=/ssh-agent/agent.sock
     volumes:
       - ssh-agent:/ssh-agent
-    command: ssh -o StrictHostKeyChecking=no -T git@github.com
-    depends_on:
-      ssh-agent:
-        condition: service_healthy
+      - ./.env:/app/.env
+      - ./servers.yaml:/app/servers.yaml
 
 volumes:
   ssh-agent:
