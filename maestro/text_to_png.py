@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def text_to_png(src: str) -> BytesIO:
+    src = src[:10240]
     file = BytesIO()
 
     font_size = 24
